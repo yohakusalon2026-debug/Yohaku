@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>https://github.com/yohakusalon2026-debug/Yohaku/new/main
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>余白 — サロンについて</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@200;300&family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f0ece3;
+    --paper: #1a1712;
+    --warm: #c8a97e;
+    --muted: rgba(200,169,126,0.55);
+    --accent: #c8a97e;
+    --line: rgba(200,169,126,0.15);
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Noto Serif JP’, serif;
+min-height: 100vh;
+-webkit-text-size-adjust: 100%;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg width=‘200’ height=‘200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘200’ height=‘200’ filter=‘url(%23noise)’ opacity=‘0.025’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+}
+
+.page {
+max-width: 480px;
+margin: 0 auto;
+padding: 52px 28px 80px;
+position: relative;
+z-index: 1;
+}
+
+/* ヘッダー */
+header {
+text-align: center;
+margin-bottom: 56px;
+animation: fadeUp 0.9s ease both;
+}
+
+.salon-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-weight: 200;
+font-size: 11px;
+letter-spacing: 0.5em;
+color: var(–muted);
+margin-bottom: 8px;
+}
+
+.salon-jp {
+font-family: ‘Noto Serif JP’, serif;
+font-weight: 200;
+font-size: 36px;
+letter-spacing: 0.5em;
+color: var(–ink);
+margin-bottom: 20px;
+}
+
+.header-divider {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-bottom: 16px;
+}
+.h-line {
+width: 40px; height: 1px;
+background: linear-gradient(to right, transparent, var(–warm));
+}
+.h-line.r { background: linear-gradient(to left, transparent, var(–warm)); }
+.h-diamond {
+width: 4px; height: 4px;
+background: var(–warm);
+transform: rotate(45deg);
+}
+
+.page-title {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 10px;
+letter-spacing: 0.4em;
+color: var(–muted);
+}
+
+/* セクション共通 */
+.section {
+margin-bottom: 48px;
+animation: fadeUp 0.9s ease both;
+}
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.2s; }
+.section:nth-child(4) { animation-delay: 0.3s; }
+.section:nth-child(5) { animation-delay: 0.4s; }
+
+.section-label {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 20px;
+}
+
+.section-label-text {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 9px;
+letter-spacing: 0.4em;
+color: var(–muted);
+white-space: nowrap;
+}
+
+.section-label-line {
+flex: 1;
+height: 1px;
+background: var(–line);
+}
+
+/* 想い・理念 */
+.concept-box {
+border: 1px solid var(–line);
+padding: 28px 24px;
+background: rgba(255,255,255,0.03);
+position: relative;
+}
+
+.concept-box::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 40px; height: 2px;
+background: linear-gradient(to right, var(–warm), transparent);
+opacity: 0.6;
+}
+
+.concept-lead {
+font-family: ‘Noto Serif JP’, serif;
+font-weight: 300;
+font-size: 14px;
+letter-spacing: 0.25em;
+line-height: 2.2;
+color: var(–ink);
+margin-bottom: 20px;
+}
+
+.concept-lead span {
+color: var(–warm);
+}
+
+.concept-body {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 11px;
+letter-spacing: 0.14em;
+line-height: 2.4;
+color: rgba(240,236,227,0.6);
+}
+
+/* プロフィール */
+.profile-box {
+border: 1px solid var(–line);
+background: rgba(255,255,255,0.03);
+overflow: hidden;
+}
+
+.profile-top {
+padding: 24px 24px 20px;
+border-bottom: 1px solid var(–line);
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+.profile-icon {
+width: 56px;
+height: 56px;
+border: 1px solid rgba(200,169,126,0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+position: relative;
+}
+
+.profile-icon::before {
+content: ‘’;
+position: absolute;
+inset: 3px;
+border: 1px solid rgba(200,169,126,0.1);
+}
+
+.profile-icon-kanji {
+font-family: ‘Noto Serif JP’, serif;
+font-weight: 200;
+font-size: 22px;
+color: var(–warm);
+}
+
+.profile-name-wrap {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+.profile-role {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 8.5px;
+letter-spacing: 0.3em;
+color: var(–muted);
+}
+
+.profile-name {
+font-family: ‘Noto Serif JP’, serif;
+font-weight: 300;
+font-size: 18px;
+letter-spacing: 0.3em;
+color: var(–ink);
+}
+
+.profile-name-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-weight: 200;
+font-size: 10px;
+letter-spacing: 0.3em;
+color: rgba(200,169,126,0.4);
+}
+
+.profile-body {
+padding: 20px 24px;
+}
+
+.profile-text {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 11px;
+letter-spacing: 0.14em;
+line-height: 2.4;
+color: rgba(240,236,227,0.6);
+margin-bottom: 16px;
+}
+
+.profile-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+}
+
+.profile-tag {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 8.5px;
+letter-spacing: 0.18em;
+color: rgba(200,169,126,0.75);
+border: 1px solid rgba(200,169,126,0.22);
+padding: 3px 10px;
+}
+
+/* 施術説明カード */
+.method-cards {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.method-card {
+border: 1px solid var(–line);
+background: rgba(255,255,255,0.03);
+overflow: hidden;
+}
+
+.method-card-head {
+padding: 14px 20px;
+border-bottom: 1px solid var(–line);
+display: flex;
+align-items: center;
+gap: 12px;
+background: rgba(200,169,126,0.05);
+}
+
+.method-card-icon {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-weight: 200;
+font-size: 13px;
+letter-spacing: 0.2em;
+color: var(–warm);
+white-space: nowrap;
+}
+
+.method-card-title {
+font-family: ‘Noto Serif JP’, serif;
+font-weight: 200;
+font-size: 13px;
+letter-spacing: 0.25em;
+color: var(–ink);
+}
+
+.method-card-body {
+padding: 16px 20px;
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 200;
+font-size: 10.5px;
+letter-spacing: 0.14em;
+line-height: 2.4;
+color: rgba(240,236,227,0.55);
+}
+
+/* フッター */
+footer {
+text-align: center;
+margin-top: 48px;
+padding-top: 28px;
+border-top: 1px solid var(–line);
+animation: fadeUp 0.9s 0.5s ease both;
+}
+
+.footer-text {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-weight: 200;
+font-size: 12px;
+letter-spacing: 0.4em;
+color: rgba(200,169,126,0.25);
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="salon-en">Yohaku</div>
+    <div class="salon-jp">余白</div>
+    <div class="header-divider">
+      <div class="h-line"></div>
+      <div class="h-diamond"></div>
+      <div class="h-line r"></div>
+    </div>
+    <div class="page-title">サロンについて</div>
+  </header>
+
+  <!-- 想い・理念 -->
+
+  <div class="section">
+    <div class="section-label">
+      <div class="section-label-text">想い・理念</div>
+      <div class="section-label-line"></div>
+    </div>
+    <div class="concept-box">
+      <div class="concept-lead">
+        あなたの中に、<span>余白</span>はありますか。
+      </div>
+      <div class="concept-body">
+        忙しい毎日の中で、私たちはいつの間にか自分の身体のサインを見過ごしてしまいます。肩のこり、眠れない夜、なんとなく続く重だるさ。それは身体があなたに送っているやさしいメッセージかもしれません。<br><br>
+        「余白」は、そんな身体の声にていねいに耳を傾けるための場所です。アーユルヴェーダのマルマセラピーで気の流れを解放し、オステオパシーで骨格・内臓の構造を整える。東洋と西洋、ふたつの叡智を融合させた施術で、あなた本来のすこやかさを取り戻すお手伝いをしています。<br><br>
+        何かをがんばる時間ではなく、ただ、ここにいるだけでいい時間。施術を通じて、あなたの日常に小さな「余白」が生まれることを願っています。
+      </div>
+    </div>
+  </div>
+
+  <!-- 施術者プロフィール -->
+
+  <div class="section">
+    <div class="section-label">
+      <div class="section-label-text">施術者プロフィール</div>
+      <div class="section-label-line"></div>
+    </div>
+    <div class="profile-box">
+      <div class="profile-top">
+        <div class="profile-icon">
+          <div class="profile-icon-kanji">人</div>
+        </div>
+        <div class="profile-name-wrap">
+          <div class="profile-role">セラピスト / オステオパス</div>
+          <div class="profile-name">サロン　余白</div>
+          <div class="profile-name-en">Practitioner, Yohaku</div>
+        </div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-text">
+          アーユルヴェーダとオステオパシーを学び、「身体の構造と気の流れは、深いところでつながっている」という確信のもとにサロン「余白」を開設。<br><br>
+          ひとりひとりの体質・状態・生活背景に寄り添い、その日のお身体に合わせた施術をご提案しています。母子ケアにも対応しており、産前・産後の繊細な時期をやさしくサポートすることを大切にしています。<br><br>
+          「施術が終わったとき、なんだか深呼吸できる気がする」そんな時間をお届けできたら、と思っています。
+        </div>
+        <div class="profile-tags">
+          <span class="profile-tag">アーユルヴェーダ</span>
+          <span class="profile-tag">マルマセラピー</span>
+          <span class="profile-tag">オステオパシー</span>
+          <span class="profile-tag">母子ケア</span>
+          <span class="profile-tag">産前・産後ケア</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 施術について -->
+
+  <div class="section">
+    <div class="section-label">
+      <div class="section-label-text">施術について</div>
+      <div class="section-label-line"></div>
+    </div>
+    <div class="method-cards">
+
+```
+  <div class="method-card">
+    <div class="method-card-head">
+      <div class="method-card-icon">Ayurveda</div>
+      <div class="method-card-title">アーユルヴェーダ・マルマセラピー</div>
+    </div>
+    <div class="method-card-body">
+      アーユルヴェーダはインド発祥の伝統医学で、5000年以上の歴史を持ちます。その中でもマルマセラピーは、身体の107のエネルギーポイント（マルマ）に働きかけ、気（プラーナ）の流れを整える施術です。滞った気を解放することで、身体の自然治癒力を引き出し、心身のバランスを根本から調整します。
+    </div>
+  </div>
+
+  <div class="method-card">
+    <div class="method-card-head">
+      <div class="method-card-icon">Osteopathy</div>
+      <div class="method-card-title">オステオパシー</div>
+    </div>
+    <div class="method-card-body">
+      オステオパシーは19世紀にアメリカで生まれた手技療法で、骨格・筋肉・内臓・神経など身体のすべての構造が連動しているという考え方に基づきます。骨格の歪みや内臓の位置・動きにやさしくアプローチすることで、身体本来の機能とバランスを回復させます。「余白」ではマルマセラピーと組み合わせることで、より深い調整を実現しています。
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <footer>
+    <div class="footer-text">Yohaku — 余白</div>
+  </footer>
+
+</div>
+</body>
+</html>
