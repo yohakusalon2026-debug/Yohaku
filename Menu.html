@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>余白 — メニュー・料金</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@200;300&family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f0ece3;
+    --paper: #1a1712;
+    --warm: #c8a97e;
+    --muted: rgba(200,169,126,0.55);
+    --accent: #c8a97e;
+    --line: rgba(200,169,126,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 和紙テクスチャ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 52px 28px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ヘッダー */
+  header {
+    text-align: center;
+    margin-bottom: 52px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .salon-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .salon-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200;
+    font-size: 36px;
+    letter-spacing: 0.5em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .h-line {
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm));
+  }
+  .h-line.r { background: linear-gradient(to left, transparent, var(--warm)); }
+  .h-diamond {
+    width: 4px; height: 4px;
+    background: var(--warm);
+    transform: rotate(45deg);
+  }
+
+  .page-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+  }
+
+  /* メニューカード */
+  .menu-card {
+    position: relative;
+    border: 1px solid rgba(200,169,126,0.15);
+    background: rgba(255,255,255,0.04);
+    margin-bottom: 16px;
+    padding: 0;
+    overflow: hidden;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .menu-card:nth-child(2) { animation-delay: 0.1s; }
+  .menu-card:nth-child(3) { animation-delay: 0.2s; }
+  .menu-card:nth-child(4) { animation-delay: 0.3s; }
+  .menu-card:nth-child(5) { animation-delay: 0.4s; }
+
+  /* カード上部カラーバー */
+  .card-bar {
+    height: 2px;
+    background: linear-gradient(to right, var(--warm), transparent);
+    opacity: 0.5;
+  }
+
+  .card-inner {
+    padding: 24px 24px 20px;
+  }
+
+  /* カードヘッダー */
+  .card-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .card-head-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .card-name {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 4px;
+  }
+
+  .reading {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+  }
+
+  .course-name {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: rgba(200,169,126,0.55);
+  }
+
+  .card-head-right {
+    text-align: right;
+  }
+
+  .time-badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  /* 仕切り */
+  .card-divider {
+    height: 1px;
+    background: var(--line);
+    margin-bottom: 14px;
+  }
+
+  /* 部位タグ */
+  .parts-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .part-tag {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(200,169,126,0.8);
+    border: 1px solid rgba(200,169,126,0.25);
+    padding: 3px 10px;
+    background: rgba(200,169,126,0.05);
+  }
+
+  /* 説明文 */
+  .desc {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 2.2;
+    color: rgba(240,236,227,0.55);
+  }
+
+  /* 母子ケアカード */
+  .menu-card.boshi .card-bar {
+    background: linear-gradient(to right, #c8a97e, rgba(200,169,126,0.3));
+    opacity: 0.7;
+  }
+
+  .menu-card.boshi {
+    background: rgba(200,169,126,0.06);
+    border-color: rgba(200,169,126,0.25);
+  }
+
+  .menu-card.boshi .kanji {
+    color: rgba(200,169,126,0.85);
+  }
+
+  /* おすすめ対象者 */
+  .recommend {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(200,169,126,0.06);
+    border-left: 2px solid rgba(200,169,126,0.35);
+  }
+
+  .recommend-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 8.5px;
+    letter-spacing: 0.3em;
+    color: rgba(200,169,126,0.55);
+    margin-bottom: 5px;
+  }
+
+  .recommend-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    line-height: 2;
+    color: rgba(240,236,227,0.5);
+  }
+
+  /* 注記 */
+  .note-section {
+    margin-top: 40px;
+    padding: 20px 20px;
+    border: 1px solid rgba(200,169,126,0.15);
+    background: rgba(255,255,255,0.03);
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+
+  .note-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .note-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .note-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    line-height: 2.4;
+    color: rgba(200,169,126,0.5);
+  }
+
+  /* 予約ボタン */
+  .reserve-btn {
+    display: block;
+    margin: 32px auto 0;
+    width: 100%;
+    max-width: 280px;
+    padding: 16px 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 0.45em;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    animation: fadeUp 0.9s 0.6s ease both;
+    transition: background 0.3s;
+  }
+
+  .reserve-btn:hover { background: #2e2a22; }
+
+  .reserve-btn::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(200,169,126,0.2);
+    pointer-events: none;
+  }
+
+  /* フッター */
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    animation: fadeUp 0.9s 0.7s ease both;
+  }
+
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    color: rgba(26,23,18,0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="salon-en">Yohaku</div>
+    <div class="salon-jp">余白</div>
+    <div class="header-divider">
+      <div class="h-line"></div>
+      <div class="h-diamond"></div>
+      <div class="h-line r"></div>
+    </div>
+    <div class="page-title">メニュー・料金</div>
+  </header>
+
+  <!-- 解 -->
+  <div class="menu-card">
+    <div class="card-bar"></div>
+    <div class="card-inner">
+      <div class="card-head">
+        <div class="card-head-left">
+          <div class="kanji">解</div>
+          <div class="card-name">
+            <div class="reading">ほどく</div>
+            <div class="course-name">フルボディ調整コース</div>
+          </div>
+        </div>
+        <div class="card-head-right">
+          <span class="time-badge">90 min</span>
+          <span class="price">¥13,000</span>
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="parts-row">
+        <span class="part-tag">ヘッド</span>
+        <span class="part-tag">ボディ</span>
+        <span class="part-tag">内臓</span>
+      </div>
+      <div class="desc">
+        マルマセラピーで気の滞りを解放し、オステオパシーで構造・内臓へと深くアプローチする最上位コース。心身に積み重なった緊張をすべてほどきます。
+      </div>
+      <div class="recommend">
+        <div class="recommend-label">こんな方におすすめ</div>
+        <div class="recommend-text">慢性的な疲れ・コリが抜けない方 / 内臓の不調を感じる方 / 根本からしっかり整えたい方 / はじめての方</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 整 -->
+  <div class="menu-card">
+    <div class="card-bar"></div>
+    <div class="card-inner">
+      <div class="card-head">
+        <div class="card-head-left">
+          <div class="kanji">整</div>
+          <div class="card-name">
+            <div class="reading">ととのう</div>
+            <div class="course-name">スタンダードコース</div>
+          </div>
+        </div>
+        <div class="card-head-right">
+          <span class="time-badge">60 min</span>
+          <span class="price">¥9,000</span>
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="parts-row">
+        <span class="part-tag">ヘッド</span>
+        <span class="part-tag">ボディ</span>
+      </div>
+      <div class="desc">
+        気の巡りと骨格のバランスを同時に整えるスタンダードコース。マルマポイントへの働きかけとオステオパシーの構造調整で、内側からの安定をもたらします。
+      </div>
+      <div class="recommend">
+        <div class="recommend-label">こんな方におすすめ</div>
+        <div class="recommend-text">肩こり・頭痛・眠れない方 / 気の流れを整えたい方 / 定期的なメンテナンスをお考えの方</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 間 -->
+  <div class="menu-card">
+    <div class="card-bar"></div>
+    <div class="card-inner">
+      <div class="card-head">
+        <div class="card-head-left">
+          <div class="kanji">間</div>
+          <div class="card-name">
+            <div class="reading">ま</div>
+            <div class="course-name">リセットケア</div>
+          </div>
+        </div>
+        <div class="card-head-right">
+          <span class="time-badge">40 min</span>
+          <span class="price">¥6,000</span>
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="parts-row">
+        <span class="part-tag">部分</span>
+      </div>
+      <div class="desc">
+        日常のなかに「余白」を作るリセットケア。ボディを中心に、今この瞬間の滞りと構造の歪みにピンポイントでアプローチします。
+      </div>
+      <div class="recommend">
+        <div class="recommend-label">こんな方におすすめ</div>
+        <div class="recommend-text">隙間時間にリフレッシュしたい方 / 気になる部分だけ集中ケアしたい方 / 初めてで短時間から試したい方</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 結（母子ケア） -->
+  <div class="menu-card boshi">
+    <div class="card-bar"></div>
+    <div class="card-inner">
+      <div class="card-head">
+        <div class="card-head-left">
+          <div class="kanji">結</div>
+          <div class="card-name">
+            <div class="reading">むすぶ</div>
+            <div class="course-name">母子ケア</div>
+          </div>
+        </div>
+        <div class="card-head-right">
+          <span class="time-badge">60 min</span>
+          <span class="price">¥10,000</span>
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="parts-row">
+        <span class="part-tag">ヘッド</span>
+        <span class="part-tag">ボディ</span>
+        <span class="part-tag">産前・産後対応</span>
+      </div>
+      <div class="desc">
+        変化し続ける母体をやさしく整え、赤ちゃんとの絆を育む特別なコース。産前・産後の心身をトータルにサポートします。
+      </div>
+      <div class="recommend">
+        <div class="recommend-label">こんな方におすすめ</div>
+        <div class="recommend-text">妊娠中・産後の体の変化が気になる方 / 赤ちゃんと一緒にケアを受けたい方 / 産後の骨盤・体型を整えたい方</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注記 -->
+  <div class="note-section">
+    <div class="note-title">ご注意・ご案内</div>
+    <div class="note-text">
+      ・初回ご来店の方はカウンセリング（約15分）を含みます<br>
+      ・施術内容はその日のお身体の状態に合わせてご提案いたします<br>
+      ・料金はすべて税込みです<br>
+      ・ご予約のキャンセルは前日までにご連絡ください
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-text">Yohaku — 余白</div>
+  </footer>
+
+</div>
+</body>
+</html>
